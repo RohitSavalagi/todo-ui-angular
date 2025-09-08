@@ -1,9 +1,32 @@
-.container {
-    display: flex;
-    justify-content: center;
-    padding-top: 30px;
+.completed {
+    text-decoration: line-through;
+    color: gray;
 }
 
-.card-layout {
-  width: 500px;
+.empty {
+    text-align: center;
+    color: #777;
+    margin-top: 1rem;
+
+    mat-icon {
+        font-size: 40px;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.item {
+    padding-inline: 0;
+}
+
+.edit-button {
+    margin-left: auto;
+}
+
+::ng-deep .mat-icon {
+    display: flex;
+}
+
+::ng-deep .mat-mdc-list-item-unscoped-content {
+    display: flex;
+    align-items: center;
 }

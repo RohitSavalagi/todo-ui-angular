@@ -1,52 +1,72 @@
-import { Component, inject, model } from '@angular/core';
-import { TodoServiceTs } from '../../services/todo';
-import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { MatCardContent, MatCardModule, MatCardTitle } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { Component, OnInit } from '@angular/core';
+import { TodoServiceTs } from '../../services/todo';
+import { Todo } from '../../models/todo';
+import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconButton } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatLineModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.html',
-  styleUrl: './todo-list.less',
-  imports: [
-    MatListModule,
-    MatCardModule,
-    MatCardTitle,
-    MatCardContent,
-    CommonModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatLineModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+    selector: 'app-todo-list',
+    templateUrl: 'todo-list.html',
+    styleUrls: ['todo-list.less'],
+    imports: [
+        MatCardModule,
+        CommonModule,
+        MatListModule,
+        MatCheckboxModule,
+        MatIcon,
+        MatProgressBarModule,
+        MatIconButton,
+        MatFormField,
+        FormsModule,
+    ],
 })
-export class TodoList {
-  private todoService = inject(TodoServiceTs);
-  todos = this.todoService.getAllTodos();
-  description = model('');
+export class TodoListComponent implements OnInit {
+    todos: Todo[] = [];
+    loading = true;
 
-  toggleComplete(todo: any) {
-    todo.completed = !todo.completed;
-  }
+    constructor(private todoService: TodoServiceTs) {}
 
-  deleteTodo(todo: any) {
-    // Remove from todoList OR call backend
-  }
+    ngOnInit(): void {
+        this.fetchTodos();
+    }
 
-  save() {
-    throw new Error('Method not implemented.');
-  }
-  updateItem() {
-    throw new Error('Method not implemented.');
-  }
+    fetchTodos(): void {
+        this.todoService.getAllTodos().subscribe({
+            next: data => {
+                this.todos = data;
+                this.loading = false;
+            },
+            error: () => {
+                this.loading = false;
+            },
+        });
+    }
+
+    toggleComplete(todo: Todo): void {
+        const updated = { ...todo, completed: !todo.completed };
+        this.todoService.updateTodo(updated).subscribe({
+            next: t => {
+                todo.completed = t.completed;
+            },
+        });
+    }
+
+    deleteTodo(id: string): void {
+        this.todoService.deleteTodo(id).subscribe({
+            next: () => {
+                this.todos = this.todos.filter(t => t._id !== id);
+            },
+        });
+    }
+
+    editTodo(): void {
+        console.log('Edit todo clicked');
+    }
 }

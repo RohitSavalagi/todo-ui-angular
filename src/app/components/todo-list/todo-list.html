@@ -1,18 +1,43 @@
-<div class="container">
-    <mat-card appearance="outlined" class="card-layout">
-        <mat-card-header>
-            <mat-card-title>To-Do List</mat-card-title>
-        </mat-card-header>
+<mat-progress-bar
+    *ngIf="loading"
+    mode="indeterminate"
+></mat-progress-bar>
 
-        <mat-card-content>
-            <mat-form-field appearance="outline">
-                <mat-label>Enter your task</mat-label>
-                <input matInput placeholder="Describe what to do ?" [(ngModel)]="description" /> @if (true) {
-                <mat-icon matSuffix (click)="updateItem()">save_as</mat-icon>
-                } @else {
-                <mat-icon matSuffix (click)="save()">save</mat-icon>
-                }
-            </mat-form-field>
-        </mat-card-content>
-    </mat-card>
+<mat-list *ngIf="!loading && todos.length > 0">
+    <mat-list-item
+        class="item"
+        *ngFor="let todo of todos"
+    >
+        <mat-checkbox
+            [checked]="todo.completed"
+            (change)="toggleComplete(todo)"
+        >
+            <span [class.completed]="todo.completed">{{ todo.title }}</span>
+        </mat-checkbox>
+
+        <button
+            class="edit-button"
+            mat-icon-button
+            color="warn"
+            (click)="editTodo()"
+        >
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button
+            class="delete-button"
+            mat-icon-button
+            color="warn"
+            (click)="deleteTodo(todo._id)"
+        >
+            <mat-icon>delete</mat-icon>
+        </button>
+    </mat-list-item>
+</mat-list>
+
+<div
+    *ngIf="!loading && todos.length === 0"
+    class="empty"
+>
+    <mat-icon>check_circle</mat-icon>
+    <p>No tasks yet!</p>
 </div>

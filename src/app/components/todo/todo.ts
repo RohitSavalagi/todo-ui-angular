@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatError, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
-import { MAT_INPUT_CONFIG, MatFormField, MatInput } from '@angular/material/input';
+import { MatFormField, MatInput } from '@angular/material/input';
 import { ShowOnDirtyErrorStateMatcher } from '../../matchers/error.matcher';
 import { TodoServiceTs } from '../../services/todo';
 import { Todo } from '../../models/todo';
+import { TodoListComponent } from '../todo-list/todo-list';
 
 @Component({
     selector: 'app-todo',
@@ -23,6 +24,7 @@ import { Todo } from '../../models/todo';
         CommonModule,
         MatError,
         FormsModule,
+        TodoListComponent,
     ],
     templateUrl: './todo.html',
     styleUrl: './todo.less',
@@ -72,6 +74,7 @@ export class TodoComponent {
                         this.formControl.reset();
                         this.formControl.markAsPristine();
                         this.formControl.markAsUntouched();
+                        this.isFormOpen = false;
                     },
                     error: err => {
                         console.error('Error adding todo:', err);
