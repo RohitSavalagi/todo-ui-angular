@@ -1,0 +1,31 @@
+<div class="todo">
+    <div class="todo__container">
+        <div class="todo__title">My Tasks</div>
+        <button matButton class="todo__add-todo" type="button" (click)="toggleForm()">
+      <svg class="todo__add-task" height="20" width="20" viewBox="0 0 24 24">
+        <use href="#icon-add-task"></use>
+      </svg>
+      <span class="todo__add-task _label">Add a task</span>
+    </button>
+
+        <div [@openClose]="isFormOpen ? 'open' : 'closed'" class="todo__form-wrapper">
+            <form (ngSubmit)="addTodo()">
+                <mat-form-field class="todo__form-field">
+                    <input matInput [formControl]="formControl" [errorStateMatcher]="matcher" type="text" placeholder="Enter todo" /> @if (formControl.hasError('required') && (formControl.dirty || formControl.touched)) {
+                    <mat-error>Task is <strong>required</strong></mat-error>
+                    }
+
+
+                    <button matSuffix matIconButton type="submit">
+            <mat-icon style="color: green">save</mat-icon>
+          </button>
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div class="todo-list__item">
+            <input type="checkbox" name="checkbox" class="todo-item__input" />
+            <label for="checkbox" class="todo-item__label">Checkbox</label>
+        </div>
+    </div>
+</div>

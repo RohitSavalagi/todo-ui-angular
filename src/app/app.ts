@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { TodoList } from "./components/todo-list/todo-list";
+import { HeaderComponent } from "./components/header/header";
+import { TodoComponent } from "./components/todo/todo";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [TodoList, HeaderComponent, TodoComponent],
   templateUrl: './app.html',
   styleUrl: './app.less'
 })
 export class App {
-  protected readonly title = signal('todo-ui');
 }
