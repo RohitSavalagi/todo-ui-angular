@@ -7,8 +7,7 @@ import { Todo } from '../../models/todo';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIconButton } from '@angular/material/button';
-import { MatFormField } from '@angular/material/form-field';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -18,12 +17,12 @@ import { FormsModule } from '@angular/forms';
     imports: [
         MatCardModule,
         CommonModule,
+        MatButtonModule,
         MatListModule,
         MatCheckboxModule,
         MatIcon,
         MatProgressBarModule,
         MatIconButton,
-        MatFormField,
         FormsModule,
     ],
 })

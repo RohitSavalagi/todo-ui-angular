@@ -3,12 +3,40 @@
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @include mat.core();
-$compact-theme: mat.define-theme( (density: ( scale: -4)));
+$compact-theme: mat.define-theme(
+    (
+        density: (
+            scale: -4,
+        ),
+    )
+);
+$myapp-theme-primary: mat.m2-define-palette(mat.$m2-indigo-palette, A400, A100, A700);
+$myapp-theme-accent: mat.m2-define-palette(mat.$m2-indigo-palette);
+$myapp-theme-warn: mat.m2-define-palette(mat.$m2-red-palette);
+$myapp-theme: mat.m2-define-light-theme(
+    (
+        color: (
+            primary: $myapp-theme-primary,
+            accent: $myapp-theme-accent,
+            warn: $myapp-theme-warn,
+        ),
+    )
+);
 html {
-    @include mat.theme(( color: ( primary: mat.$azure-palette, tertiary: mat.$blue-palette, ), typography: Roboto, density: 0, ));
+    @include mat.theme(
+        (
+            color: (
+                primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        )
+    );
     @include mat.form-field-density($compact-theme);
+    @include mat.all-component-themes($myapp-theme);
 }
 
 body {
